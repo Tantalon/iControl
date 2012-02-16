@@ -1,0 +1,68 @@
+GitHub repository for building AXIS java object from BIG-IP WSDLs
+
+Requirements:
+
+This is tested on linux machines with the following packages 
+installed an in the executatble path:
+
+maven2
+wget
+
+and have Internet access to the maven public repositories.
+
+
+Instructions:
+
+Step 1.  Edit the pom.xml file setting the properties to your BIG-IP.  
+This will enable the build to login to your and download your version
+of the iControl WSDLs. 
+
+You need to edit the following three properties starting on line 11.
+
+  <properties>
+    <bigip>192.168.200.145</bigip>
+    <bigipusername>admin</bigipusername>
+    <bigippassword>admin</bigippassword>
+  </properties>
+
+You can test your values by opening a web browser to:
+
+https://[bigip]/iControl/iControlPortal.cgi
+
+and when prompted for basic credentials use the [bigipusername] and [bigippassword]
+you put in the pom.xml file. The build script will attempt to fetch the 
+WSDL files from your BIG-IP each time you run it. The actual git script objects are
+less than 50kB (basically size of a jpeg on a web page) so you can keep different 
+version of the iControl jar for each version of BIG-IP you code against.
+
+Step 2. Use maven to build AXIS java objects and optionally install them
+
+To build you can issue:
+
+	mvn package
+
+If you are only working with one version of the iControl object (or just the latest!)
+you can also install the jar file into your local maven repository
+
+	mvn install
+
+Note: 
+
+If the credentials to get to the BIG-IP or wrong or the BIG-IP can not be reached, 
+the build process will do very little and build an empty jar file.  No WSDLs = no 
+java objects!
+
+You will see the build script first get the WSDLs and then build each.  If you 
+do not see this, then it had problems getting to your BIG-IP to get the WSDLs.
+
+Enjoy!
+
+John Gruber
+
+
+
+
+
+
+
+
