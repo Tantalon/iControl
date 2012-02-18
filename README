@@ -6,7 +6,6 @@ This is tested on linux machines with the following packages
 installed an in the executatble path:
 
 maven2
-wget
 
 and have Internet access to the maven public repositories.
 

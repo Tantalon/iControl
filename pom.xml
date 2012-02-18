@@ -9,7 +9,7 @@
   <url>http://maven.apache.org</url>
 
   <properties>
-    <bigip>192.168.200.145</bigip>
+    <bigip>208.85.211.68:4000</bigip>
     <bigipusername>admin</bigipusername>
     <bigippassword>admin</bigippassword>
   </properties>
@@ -30,6 +30,13 @@
   </repositories>
 
   <dependencies>
+    <dependency>
+      <groupId>com.f5se.utils</groupId>
+      <artifactId>BIGIPWSDLGrabber</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/src/main/resources/BIGIPWSDLGrabber.jar</systemPath>
+    </dependency>
     <dependency>
       <groupId>javax.activation</groupId>
       <artifactId>activation</artifactId>
@@ -64,7 +71,7 @@
 
   <build>
     <plugins>
-      <plugin>
+       <plugin>
     	<groupId>org.codehaus.mojo</groupId>
     	<artifactId>exec-maven-plugin</artifactId>
     	<version>1.1.1</version>
@@ -73,15 +80,15 @@
            <id>getwsdls</id>
            <phase>validate</phase>
            <goals>
-            <goal>exec</goal>
+            <goal>java</goal>
            </goals>
           </execution>
         </executions>
         <configuration>
-            <workingDirectory>src/main/resources/</workingDirectory>
-            <executable>./retrieve_wsdls_headless.sh</executable>
+            <mainClass>com.f5se.utils.BIGIPWSDLGrabber</mainClass>
 	    <arguments>
-              <argument>${bigip}</argument>
+              <argument>${project.basedir}/src/main/resources/wsdls</argument>
+	      <argument>${bigip}</argument>
               <argument>${bigipusername}</argument>
               <argument>${bigippassword}</argument>
             </arguments>
@@ -106,7 +113,20 @@
           </execution>
         </executions>
       </plugin>
-
+      <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>2.4.1</version>
+        <configuration>
+         <filesets>
+           <fileset>
+             <directory>src/main/resources/wsdls</directory>
+             <includes>
+                <include>**/*.wsdl</include>
+             </includes>
+           </fileset>
+         </filesets>
+       </configuration>
+     </plugin>
     </plugins>
   </build>
 </project>
