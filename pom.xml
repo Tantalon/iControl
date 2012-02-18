@@ -9,7 +9,7 @@
   <url>http://maven.apache.org</url>
 
   <properties>
-    <bigip>208.85.211.68:4000</bigip>
+    <bigip>192.168.200.145</bigip>
     <bigipusername>admin</bigipusername>
     <bigippassword>admin</bigippassword>
   </properties>
