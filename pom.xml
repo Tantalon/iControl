@@ -9,7 +9,7 @@
   <url>http://maven.apache.org</url>
 
   <properties>
-    <bigip>192.168.200.145</bigip>
+    <bigip>192.168.100.245</bigip>
     <bigipusername>admin</bigipusername>
     <bigippassword>admin</bigippassword>
   </properties>
@@ -62,11 +62,6 @@
        <artifactId>axis-jaxrpc</artifactId>
        <version>1.4</version>
     </dependency>
-    <dependency>
-       <groupId>axis</groupId>
-       <artifactId>axis</artifactId>
-       <version>1.4</version>
-    </dependency>
   </dependencies>
 
   <build>
@@ -84,16 +79,18 @@
            </goals>
           </execution>
         </executions>
-        <configuration>
-            <mainClass>com.f5se.utils.BIGIPWSDLGrabber</mainClass>
+        <configuration>       
+        <mainClass>com.f5se.utils.BIGIPWSDLGrabber</mainClass>
 	    <arguments>
               <argument>${project.basedir}/src/main/resources/wsdls</argument>
-	      <argument>${bigip}</argument>
+	          <argument>${bigip}</argument>
               <argument>${bigipusername}</argument>
               <argument>${bigippassword}</argument>
+              <argument>${project.basedir}/src/main/java</argument>
             </arguments>
         </configuration>
      </plugin>
+     
      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>axistools-maven-plugin</artifactId>
@@ -124,9 +121,53 @@
                 <include>**/*.wsdl</include>
              </includes>
            </fileset>
+           <fileset>
+             <directory>src/main/java/iControl</directory>
+             <includes>
+                <include>BigIP.java</include>
+             </includes>
+           </fileset>
          </filesets>
        </configuration>
      </plugin>
+      <plugin>
+      	<groupId>org.codehaus.mojo</groupId>
+      	<artifactId>exec-maven-plugin</artifactId>
+      	<version>1.1.1</version>
+      </plugin>
     </plugins>
+    <pluginManagement>
+    	<plugins>
+    		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+    		<plugin>
+    			<groupId>org.eclipse.m2e</groupId>
+    			<artifactId>lifecycle-mapping</artifactId>
+    			<version>1.0.0</version>
+    			<configuration>
+    				<lifecycleMappingMetadata>
+    					<pluginExecutions>
+    						<pluginExecution>
+    							<pluginExecutionFilter>
+    								<groupId>org.codehaus.mojo</groupId>
+    								<artifactId>
+    									exec-maven-plugin
+    								</artifactId>
+    								<versionRange>
+    									[1.1.1,)
+    								</versionRange>
+    								<goals>
+    									<goal>java</goal>
+    								</goals>
+    							</pluginExecutionFilter>
+    							<action>
+    								<ignore></ignore>
+    							</action>
+    						</pluginExecution>
+    					</pluginExecutions>
+    				</lifecycleMappingMetadata>
+    			</configuration>
+    		</plugin>
+    	</plugins>
+    </pluginManagement>
   </build>
 </project>
