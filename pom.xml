@@ -89,8 +89,7 @@
               <argument>${project.basedir}/src/main/java</argument>
             </arguments>
         </configuration>
-     </plugin>
-     
+     </plugin>   
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
@@ -101,8 +100,7 @@
           </excludes>
         </configuration>
       </plugin>
-     
-     <plugin>
+      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>axistools-maven-plugin</artifactId>
         <version>1.4</version>
@@ -121,7 +119,16 @@
           </execution>
         </executions>
       </plugin>
-	  <plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
         <version>1.5</version>
@@ -154,11 +161,11 @@
          </filesets>
        </configuration>
      </plugin>
-      <plugin>
+     <plugin>
       	<groupId>org.codehaus.mojo</groupId>
       	<artifactId>exec-maven-plugin</artifactId>
       	<version>1.1.1</version>
-      </plugin>
+     </plugin>
     </plugins>
     <pluginManagement>
     	<plugins>
